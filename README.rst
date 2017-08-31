@@ -18,7 +18,7 @@ Install ``stanmagic`` using
 
 ::
 
-    $ pip install stanmagic
+    $ pip install git+https://github.com/Arvinds-ds/stanmagic.git
 
 Usage
 -----
