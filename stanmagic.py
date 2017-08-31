@@ -62,7 +62,7 @@ class StanMagics(Magics):
         __stan_code_str__ = None
         __stan_file__ = None
         __model_name__ = None
-        
+
         ip = get_ipython()
         args = shlex.split(line.strip())
         options = {k: True if v.startswith('-') else v
@@ -79,6 +79,7 @@ class StanMagics(Magics):
             else:
                 with open(source_filename, 'w') as f:
                     f.write(cell)
+                _stan_vars['stan_file'] = source_filename
                 print("File {0} saved..Skipping Compile".format(source_filename))
                 return
 
