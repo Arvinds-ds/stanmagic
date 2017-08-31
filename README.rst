@@ -13,12 +13,12 @@ can be found at https://github.com/stan-dev/cmdstan
 Ensure that stanc is in your path or you need to pass the compiler path
 specifically as outlined below
 
-Install ``stan-jupyter-magic`` using
+Install ``stanmagic`` using
 `pip <http://www.pip-installer.org/>`__:
 
 ::
 
-    $ pip install stan-jupyter-magic
+    $ pip install stanmagic
 
 Usage
 -----
