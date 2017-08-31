@@ -31,6 +31,8 @@ def check_program(program):
 
 @magics_class
 class StanMagics(Magics):
+    def __init__(self,shell):
+        super(StanMagics,self).__init__(shell)
 
     @cell_magic
     def stan(self,line, cell):
@@ -61,7 +63,6 @@ class StanMagics(Magics):
         __stan_file__ = None
         __model_name__ = None
 
-        ip = get_ipython()
         args = shlex.split(line.strip())
         options = {k: True if v.startswith('-') else v
                for k,v in zip(args, args[1:]+["--"]) if k.startswith('-')}
