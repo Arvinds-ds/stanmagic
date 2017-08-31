@@ -22,6 +22,8 @@ Install ``stanmagic`` using
 
 Usage
 -----
+See sample notebook https://github.com/Arvinds-ds/stanmagic/blob/master/StanMagic-Help.ipynb
+for usage details
 
 `%%stan`
   Saves the cell code to a string. The code string can be accessed via
