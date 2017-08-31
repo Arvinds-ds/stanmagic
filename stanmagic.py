@@ -62,7 +62,8 @@ class StanMagics(Magics):
         __stan_code_str__ = None
         __stan_file__ = None
         __model_name__ = None
-
+        
+        ip = get_ipython()
         args = shlex.split(line.strip())
         options = {k: True if v.startswith('-') else v
                for k,v in zip(args, args[1:]+["--"]) if k.startswith('-')}
