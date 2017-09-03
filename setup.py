@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-readme = open('README.rst').read()
+readme = open('README.md').read()
 
 setup(
     name='stanmagic',
