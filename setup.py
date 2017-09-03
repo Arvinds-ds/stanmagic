@@ -14,7 +14,10 @@ setup(
     author_email='arvindxxxx@gmail.com',
     url='https://github.com/arvinds-ds/stanmagic',
     py_modules=(
-        'stanmagic',
+        '_stan_builtins',
+        'stan_lexer',
+        'stan_compiler_output',
+        'stanmagic'
     ),
     install_requires=(
         'ipython',
