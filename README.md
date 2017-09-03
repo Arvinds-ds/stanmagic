@@ -63,13 +63,18 @@ for usage details
 __Note__:
   `%%stan`  magic currently outputs a `StanMagicOutput` object as default `_stan_model` object in your
   name_space
-         The  ` -v` option allows you to specify an alternate compile output object name, so that
-           you can use specified object name instead of `_stan_model`.
-           This is useful if you have multiple %%stan model cells. Currently the output object
-           exposes 3 attributes (`model_name`,` model_code`, `model_file`)
-          ` [_stan_model | <object_name>].model_file -> Name of stan_file`
-           `[_stan_model | <object_name>].model_name -> Name of stan model [None]`
-          ` [_stan_model | <object_name>].model_code -> Model code`
+  
+ The  ` -v` option allows you to specify an alternate compile output object name, so that
+   you can use specified object name instead of `_stan_model`.
+   
+   This is useful if you have multiple %%stan model cells. Currently the output object
+   exposes 3 attributes (`model_name`,` model_code`, `model_file`)
+   
+  ` [_stan_model | <object_name>].model_file -> Name of stan_file`
+  
+   `[_stan_model | <object_name>].model_name -> Name of stan model [None]`
+   
+  ` [_stan_model | <object_name>].model_code -> Model code`
 
 
 Example
