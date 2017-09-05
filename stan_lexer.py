@@ -9,7 +9,7 @@ from pygments.token import Comment, String, Punctuation, Keyword, Name, \
 
 from pygments.lexers.agile import PythonLexer
 from pygments.lexers import _scilab_builtins
-from pygments.lexers import _stan_builtins
+import _stan_builtins
 
 class StanLexer(RegexLexer):
     """Pygments Lexer for Stan models.
@@ -23,14 +23,14 @@ class StanLexer(RegexLexer):
     filenames = ['*.stan']
 
     tokens = {
-        'whitespace' : [
+        'whitespace': [
             (r"\s+", Text),
-            ],
-        'comments' : [
+        ],
+        'comments': [
             (r'(?s)/\*.*?\*/', Comment.Multiline),
             # Comments
             (r'(//|#).*$', Comment.Single),
-            ],
+        ],
         'root': [
             # Stan is more restrictive on strings than this regex
             (r'"[^"]*"', String),
@@ -39,43 +39,48 @@ class StanLexer(RegexLexer):
             # block start
             include('whitespace'),
             # Block start
-            (r'(%s)(\s*)({)' %
-             r'|'.join(('data', r'transformed\s+?data',
+            (r'(%s)(\s*)(\{)' %
+             r'|'.join(('functions', 'data', r'transformed\s+?data',
                         'parameters', r'transformed\s+parameters',
                         'model', r'generated\s+quantities')),
              bygroups(Keyword.Namespace, Text, Punctuation)),
+            # Assignment operators
+            (r'(target)(\s*)([+][=])',
+             bygroups(Keyword, Text, Operator)),
             # Reserved Words
             (r'(%s)\b' % r'|'.join(_stan_builtins.KEYWORDS), Keyword),
             # Truncation
             (r'T(?=\s*\[)', Keyword),
             # Data types
             (r'(%s)\b' % r'|'.join(_stan_builtins.TYPES), Keyword.Type),
-            # Punctuation
-            (r"[;:,\[\]()]", Punctuation),
+
             # Builtin
             (r'(%s)(?=\s*\()'
              % r'|'.join(_stan_builtins.FUNCTIONS
                          + _stan_builtins.DISTRIBUTIONS),
              Name.Builtin),
-            # Special names ending in __, like lp__
-            (r'[A-Za-z][A-Za-z0-9_]*__\b', Name.Builtin.Pseudo),
+            # Reserved Words
             (r'(%s)\b' % r'|'.join(_stan_builtins.RESERVED), Keyword.Reserved),
+            # user-defined functions
+            (r'[A-Za-z]\w*(?=\s*\()]', Name.Function),
             # Regular variable names
-            (r'[A-Za-z][A-Za-z0-9_]*\b', Name),
+            (r'[A-Za-z]\w*\b', Name),
             # Real Literals
             (r'-?[0-9]+(\.[0-9]+)?[eE]-?[0-9]+', Number.Float),
             (r'-?[0-9]*\.[0-9]*', Number.Float),
             # Integer Literals
             (r'-?[0-9]+', Number.Integer),
-            # Assignment operators
             # SLexer makes these tokens Operators.
             (r'<-|~', Operator),
-            # Infix and prefix operators (and = )
-            (r"\+|-|\.?\*|\.?/|\\|'|==?|!=?|<=?|>=?|\|\||&&", Operator),
+            # Infix, prefix and postfix operators (and = )
+            (r"\+|-|\.?\*|\.?/|\\|'|\^|==?|!=?|<=?|>=?|[|]{2}|&&|%|[?]|:", Operator),
+            # Punctuation
+            # needs to go after operators so | doesn't mask ||
+            (r"[;,\[\]()|]", Punctuation),
             # Block delimiters
             (r'[{}]', Punctuation),
-            ]
-        }
+        ]
+    }
 
     def analyse_text(text):
         if re.search(r'^\s*parameters\s*\{', text, re.M):
