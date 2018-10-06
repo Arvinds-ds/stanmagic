@@ -5,6 +5,8 @@ __pycache__/
 *$py.class
 .stan
 
+.DS_Store
+
 # C extensions
 *.so
 .ipynb_checkpoints/

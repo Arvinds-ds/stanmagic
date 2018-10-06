@@ -1,4 +1,3 @@
-from __future__ import print_function
 from IPython.core.magic import Magics, cell_magic, magics_class
 
 from IPython.utils.capture import capture_output
@@ -37,22 +36,26 @@ class StanMagics(Magics):
     @cell_magic
     def stan(self, line, cell):
         """
-        Allow jupyter notebook cells to output stan code to file and compile it
-        using stanc compiler in your path or pystan.stanc if no compiler is
-        found in path. Output of compile is stored in "_stan_model object" or
-        in an <object name> specified in -v <object_name> (e.g %%stan -f
-        test.stan -v test)
-
-        %%stan <variable_name>
+        Allow jupyter notebook cells create a pystan.StanModel object from
+        Stan code in a cell that begins with %%stan. The pystan.StanModel
+        gets assigned to a variable in the notebook's namespace, either
+        named _stan_model (the default), or a custom name (specified
+        by writing %%stan <variable_name>).
         """
-        args = " ".split(line.strip())
+        args = line.strip().split(' ')
         if len(args) == 0:
             varname = "_stan_model"
         else:
             varname = args[0]
 
+        if not varname.isidentifier():
+            raise ValueError(
+                f"The variable name {varname} is not a valid variable name."
+            )
+
         print(
-            f"Creating pystan model & assigning it to variable name {varname}."
+            f"Creating pystan model & assigning it to variable "
+            f"name \"{varname}\"."
         )
 
         with capture_output(display=False) as capture:
@@ -63,7 +66,7 @@ class StanMagics(Magics):
                 print(capture)
 
         self.shell.user_ns[varname] = _stan_model
-        print(f"StanModel now available as variable {varname}!")
+        print(f"StanModel now available as variable \"{varname}\"!")
 
 
 def load_ipython_extension(ipython):

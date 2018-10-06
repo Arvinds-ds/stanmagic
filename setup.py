@@ -1,27 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 readme = open("README.md").read()
 
 setup(
-    name="stanmodelmagic",
-    version="0.0.2",
-    description=(
-        "An extension for Jupyter that help to run Stan code in "
-        "your interactive session."
-    ),
+    name="jupyterstan",
+    version="0.0.1",
+    description="Magics for defining stan code in notebooks.",
     long_description=readme,
-    author="Aravind S",
-    author_email="arvindxxxx@gmail.com",
-    url="https://github.com/arvinds-ds/stanmagic",
-    py_modules=(
-        "_stan_builtins",
-        "stan_lexer",
-        "stan_compiler_output",
-        "stanmagic",
-    ),
-    install_requires=("ipython",),
+    author="Jan Freyberg",
+    author_email="jan.freyberg@gmail.com",
+    url="https://github.com/janfreyberg/jupyterstan",
+    packages=find_packages(),
+    install_requires=["ipython", "pystan"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Framework :: IPython",

@@ -1,0 +1,9 @@
+Type: Jupyter Notebook Extension
+Compatibility: 4.x
+Name: stan_code_helper
+Main: main.js
+Description: Synatx highlighting of Stan code specified in %%stan magic
+Link: README.md
+Parameters:
+
+
